@@ -9,7 +9,7 @@ const app = express();
 
 const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 const GOOGLE_PRIVATE_KEY = cal_secrets.private_key;
-const GOOGLE_CLIENT_EMAIL = cal_secrets
+const GOOGLE_CLIENT_EMAIL = cal_secrets.client_email
 const GOOGLE_PROJECT_NUMBER = "10319313363"
 const GOOGLE_CALENDAR_ID = "c2cc6d7196bf9d5d9feedc9f399de3b60df8e4056d29c887a1005efa67fcf7cb@group.calendar.google.com"
 
