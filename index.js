@@ -1,17 +1,17 @@
-//index.js code for integrating Google Calendar 
-
 const cal_secrets = require('./calendar-api-credentials.json');
 
+const dotenv = require('dotenv');
 const express = require('express');
 const { google } = require('googleapis');
 
 const app = express();
+dotenv.config();
 
 const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 const GOOGLE_PRIVATE_KEY = cal_secrets.private_key;
-const GOOGLE_CLIENT_EMAIL = cal_secrets.client_email
-const GOOGLE_PROJECT_NUMBER = "10319313363"
-const GOOGLE_CALENDAR_ID = "c2cc6d7196bf9d5d9feedc9f399de3b60df8e4056d29c887a1005efa67fcf7cb@group.calendar.google.com"
+const GOOGLE_CLIENT_EMAIL = cal_secrets.client_email;
+const GOOGLE_PROJECT_NUMBER = process.env.GOOGLE_PROJECT_NUMBER;
+const GOOGLE_CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
 
 
 const jwtClient = new google.auth.JWT(
@@ -48,9 +48,6 @@ app.get('/', (req, res) => {
     });
 });
 
-// create new function to get freebusy data
-// timeMin and timeMax hardcode for now
-// give me utc time zone
 app.get('/freebusy', (req, res) => {
     calendar.freebusy.query({
         resource: {
@@ -69,4 +66,3 @@ app.get('/freebusy', (req, res) => {
 
 app.listen(3000, () => console.log(`App listening on port 3000!`));
 
-// This code is contributed by Yashi Shukla
