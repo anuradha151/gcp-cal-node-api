@@ -48,11 +48,20 @@ app.get('/', (req, res) => {
     });
 });
 
+
+// create a function to get the start of the day using '2024-02-01' and output 2024-02-01T00:00:00Z
+// use mentioned formats to get the start and end of the day
+
+
 app.get('/freebusy', (req, res) => {
+
+    console.log('timeMin ', getStartOfDay(req.query.timeMin));
+    console.log('timeMax ', getEndOfDay(req.query.timeMax));
+
     calendar.freebusy.query({
         resource: {
-            timeMin: '2024-02-01T00:00:00Z',
-            timeMax: '2024-02-28T00:00:00Z',
+            timeMin: getStartOfDay(req.query.timeMin),
+            timeMax: getEndOfDay(req.query.timeMax),
             items: [{ id: GOOGLE_CALENDAR_ID }]
         }
     }, (error, result) => {
@@ -63,6 +72,15 @@ app.get('/freebusy', (req, res) => {
         }
     });
 });
+
+
+function getStartOfDay(date) {
+    return date + 'T00:00:00Z';
+}
+
+function getEndOfDay(date) {
+    return date + 'T23:59:59Z';
+}
 
 app.listen(3000, () => console.log(`App listening on port 3000!`));
 
